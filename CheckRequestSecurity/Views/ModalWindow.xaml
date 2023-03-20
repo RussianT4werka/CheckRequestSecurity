@@ -1,0 +1,96 @@
+﻿<Window x:Class="CheckRequestSecurity.Views.ModalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CheckRequestSecurity.Views"
+        mc:Ignorable="d"
+        Title="ModalWindow" MinHeight="500" MinWidth="800" MaxHeight="600" MaxWidth="900">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <Label Content="Дата начала"/>
+            <Label Content="{Binding Request.StartDate}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <Label Content="Дата конца"/>
+            <Label Content="{Binding Request.FinishDate}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Grid.ColumnSpan="2">
+            <Label Content="Подразделение"/>
+            <Label Content="{Binding Request.Worker.SubDivision.Name}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4" Grid.Row="1">
+            <Label Content="Начало посещения:"/>
+            <Label Content="Дата"/>
+            <Label Content="{Binding Request.DateVisit}"/>
+            <Label Content="Время"/>
+            <Label Content="{Binding DateVisitHours}" Margin="0 3 0 3"/>
+            <Label Content=":" Margin="0 3 0 3"/>
+            <Label Content="{Binding DateVisitMinutes}" Margin="0 3 3 3"/>
+            <Button Content="Пустить" Command="{Binding Welcome}" IsEnabled="{Binding Block}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4" Grid.Row="2">
+            <Label Content="Конец посещения:"/>
+            <Label Content="Дата"/>
+            <DatePicker SelectedDate="{Binding SelectedDate}" IsEnabled="{Binding Block2}"/>
+            <Label Content="Часы"/>
+            <TextBox Text="{Binding DateEndHours}" MaxWidth="25" IsEnabled="{Binding Block2}"/>
+            <Label Content="Минуты"/>
+            <TextBox Text="{Binding DateEndMinutes}" MaxWidth="25" IsEnabled="{Binding Block2}"/>
+            <Button Content="Выпустить" Command="{Binding NotWelcome}" IsEnabled="{Binding Block2}"/>
+        </StackPanel>
+
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="3">
+            <Label Content="Цель посещения"/>
+            <Label Content="{Binding Request.TargetVisit}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.Column="2">
+            <Label Content="ФИО"/>
+            <Label Content="{Binding Request.Worker.Surname}"/>
+            
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="3">
+            <Label Content="Статус заявки"/>
+            <Label Content="{Binding Request.Status.Name}"/>
+        </StackPanel>
+
+        <ListView Grid.ColumnSpan="4" Grid.Row="4" ItemsSource="{Binding Request.VisitorsRequests}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Фамилия*" DisplayMemberBinding="{Binding Visitors.Surname}"/>
+                    <GridViewColumn Header="Имя*" DisplayMemberBinding="{Binding Visitors.Name}"/>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Visitors.Patronymic}"/>
+                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Visitors.PhoneNumber}"/>
+                    <GridViewColumn Header="E-mail*" DisplayMemberBinding="{Binding Visitors.Email}"/>
+                    <GridViewColumn Header="Организация" DisplayMemberBinding="{Binding Visitors.Organisation}"/>
+                    <GridViewColumn Header="Примечание" DisplayMemberBinding="{Binding Visitors.Note}"/>
+                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding Visitors.DoB}"/>
+                    <GridViewColumn Header="Серия паспорта" DisplayMemberBinding="{Binding Visitors.PassportSeries}"/>
+                    <GridViewColumn Header="Номер паспорта" DisplayMemberBinding="{Binding Visitors.PassportNumber}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+    </Grid>
+    
+</Window>

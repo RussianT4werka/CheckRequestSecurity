@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckRequestSecurity", "CheckRequestSecurity\CheckRequestSecurity.csproj", "{81423ABF-F808-452A-8D4E-0865A92B45DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81423ABF-F808-452A-8D4E-0865A92B45DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81423ABF-F808-452A-8D4E-0865A92B45DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81423ABF-F808-452A-8D4E-0865A92B45DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81423ABF-F808-452A-8D4E-0865A92B45DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E5F0F5C-CBDC-4FC5-9AC4-81205B9F5AF9}
+	EndGlobalSection
+EndGlobal
