@@ -9,7 +9,7 @@ namespace CheckRequestSecurity.Models
         public int VisitorsId { get; set; }
         public int RequestId { get; set; }
 
-        public virtual Request Request { get; set; }
-        public virtual Visitor Visitors { get; set; }
+        public virtual Request Request { get; set; } = null!;
+        public virtual Visitor Visitors { get; set; } = null!;
     }
 }

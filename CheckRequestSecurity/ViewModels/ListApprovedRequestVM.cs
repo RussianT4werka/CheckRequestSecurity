@@ -118,8 +118,6 @@ namespace CheckRequestSecurity.ViewModels
             SubDivisions = new List<SubDivision> { new SubDivision { Id = 0, Name = "Все" } };
             SubDivisions.AddRange(user50_2Context.GetInstance().SubDivisions);
             SelectedSubDivision = SubDivisions[0];
-
-
         }
 
         public void OpenModalWindow()
@@ -146,9 +144,16 @@ namespace CheckRequestSecurity.ViewModels
             Requests = new ObservableCollection<Request>(searchRequest);
         }
 
-        private static IQueryable<Request> GetRequests()
+        private IQueryable<Request> GetRequests()
         {
-            return user50_2Context.GetInstance().Requests.Include(s => s.Worker).ThenInclude(s => s.SubDivision).Include(s => s.VisitorsRequests).ThenInclude(s => s.Visitors).ThenInclude( s => s.VisitorsVisits).ThenInclude( s => s.Visit).Where(s => s.StatusId == 2);
+            return user50_2Context.GetInstance().Requests
+                .Include(s => s.Worker)
+                .ThenInclude(s => s.SubDivision)
+                .Include(s => s.VisitorsRequests)
+                .ThenInclude(s => s.Visitors)
+                .ThenInclude( s => s.VisitorsVisits)
+                .ThenInclude( s => s.Visit)
+                .Where(s => s.StatusId == 2);
         }
     }
 }

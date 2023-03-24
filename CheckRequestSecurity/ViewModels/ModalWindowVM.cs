@@ -114,7 +114,7 @@ namespace CheckRequestSecurity.ViewModels
             DateVisitHours = selectedRequest.DateVisit.Value.Hour;
             DateVisitMinutes = selectedRequest.DateVisit.Value.Minute;
             Status = user50_2Context.GetInstance().Statuses.ToList();
-            VisitorsVisit visitorsVisit = selectedRequest.VisitorsRequests.First().Visitors.VisitorsVisits.First();
+            VisitorsVisit visitorsVisit = selectedRequest.VisitorsRequests.First().Visitors.VisitorsVisits.FirstOrDefault( s => s.Visit.DateEnd == null);
             if (visitorsVisit != null)
             {
                 if(visitorsVisit.Visit.DateEnd != null)
@@ -123,6 +123,10 @@ namespace CheckRequestSecurity.ViewModels
                     SelectedDate = visitorsVisit.Visit.DateEnd.Value;
                     DateEndHours = visitorsVisit.Visit.DateEnd.Value.Hour;
                     DateEndMinutes = visitorsVisit.Visit.DateEnd.Value.Minute;
+                }
+                else if (visitorsVisit.Visit.TimeFinishSubDivision != null)
+                {
+                    Block2 = true;
                 }
                 Block = false;
                 visit = visitorsVisit.Visit;
@@ -133,17 +137,15 @@ namespace CheckRequestSecurity.ViewModels
             }
             Welcome = new Command(() =>
             {
-                if (DateTime.Now < selectedRequest.DateVisit)
-                {
-                    MessageBox.Show("РАНО!");
-                    return;
-                }
-                else
-                {
-                    System.Media.SystemSounds.Hand.Play();
-                    Visit visit = new Visit { DateStart = DateTime.Now, WorkerId = selectedRequest.WorkerId };
-                    //user50_2Context.GetInstance().Visits.Add(visit);
-                    //user50_2Context.GetInstance().SaveChanges();
+            if (DateTime.Now < selectedRequest.DateVisit)
+            {
+                MessageBox.Show("РАНО!");
+                return;
+            }
+            else
+            {
+                System.Media.SystemSounds.Hand.Play();
+                    Visit visit = new Visit { DateStart = (DateTime)selectedRequest.DateVisit, WorkerId = selectedRequest.WorkerId };
                     
                     foreach (VisitorsRequest visitor in selectedRequest.VisitorsRequests)
                     {
@@ -154,14 +156,13 @@ namespace CheckRequestSecurity.ViewModels
                     user50_2Context.GetInstance().SaveChanges();
                     this.visit = user50_2Context.GetInstance().Visits.ToList().Last();
                     Block = false;
-                    Block2 = true;
                 }
             });
             
             NotWelcome = new Command(() =>
             {
                 visit.DateEnd = new DateTime(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, DateEndHours, DateEndMinutes, 0);
-                if (visit.DateEnd < visit.DateStart )
+                if (visit.DateEnd < visit.DateStart || visit.DateEnd < visit.TimeFinishSubDivision)
                 {
                     MessageBox.Show("Пользователи не могут выйти раньше чем зашли");
                     return;

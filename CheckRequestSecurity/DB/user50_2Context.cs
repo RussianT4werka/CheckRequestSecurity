@@ -8,6 +8,8 @@ namespace CheckRequestSecurity.DB
 {
     public partial class user50_2Context : DbContext
     {
+        
+
         public user50_2Context()
         {
         }
@@ -35,7 +37,7 @@ namespace CheckRequestSecurity.DB
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=192.168.200.35;user=user50;password=26643;database=user50_2;TrustServerCertificate=true");
+                optionsBuilder.UseSqlServer("server=192.168.200.35;user=user50;database=user50_2;password=26643;TrustServerCertificate=true");
             }
         }
 
@@ -133,6 +135,10 @@ namespace CheckRequestSecurity.DB
 
                 entity.Property(e => e.GroupNumber).HasMaxLength(10);
 
+                entity.Property(e => e.TimeFinishSubDivision).HasColumnType("datetime");
+
+                entity.Property(e => e.TimeStartSubDivision).HasColumnType("datetime");
+
                 entity.Property(e => e.WorkerId).HasColumnName("WorkerID");
 
                 entity.HasOne(d => d.Worker)
@@ -171,11 +177,13 @@ namespace CheckRequestSecurity.DB
                 entity.HasOne(d => d.Request)
                     .WithMany(p => p.VisitorsRequests)
                     .HasForeignKey(d => d.RequestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VisitorsRequest_Request");
 
                 entity.HasOne(d => d.Visitors)
                     .WithMany(p => p.VisitorsRequests)
                     .HasForeignKey(d => d.VisitorsId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_VisitorsRequest_Visitors");
             });
 
